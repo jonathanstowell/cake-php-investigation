@@ -84,7 +84,7 @@
                                 <span class="caret-inner"></span>
                             </li>
                             <li>
-                                <?php echo $this->Form->create(null, array('url' => array('controller' => 'users', 'action' => 'login'))); ?>
+                                <?php echo $this->Form->create(null, array('url' => array('controller' => 'users', 'action' => 'login'), 'id' => 'partial-login-form')); ?>
 
                                     <?=$form->error('User.username'); ?>
                                     <p>
@@ -97,11 +97,11 @@
 
                                     </p>
                                     <?=$form->submit('Log in'); ?>
-                                    <?php echo $this->Html->link("Register", array('controller' => 'users', 'action' => 'register')); ?>
                                 </form>
                             </li>
                         </ul>
                     </li>
+                    <li><?php echo $this->Html->link("or Register!", array('controller' => 'users', 'action' => 'register')); ?></li>
                 </ul>
                 <? endif; ?>
             </div>
