@@ -1,6 +1,6 @@
-<!-- File: /app/views/posts/add.ctp -->
-
-<h1>Add Post</h1>
+<div class="hero-unit">
+    <h1>Add Post</h1>
+</div>
 <?php
 echo $this->Form->create('Post');
 echo $this->Form->input('title');
