@@ -6,5 +6,6 @@
 	echo $this->Form->input('title');
 	echo $this->Form->input('body', array('rows' => '3'));
 	echo $this->Form->input('id', array('type' => 'hidden'));
-	echo $this->Form->end('Save Post', array('class' => 'btn btn-primary'));
+    echo $this->Form->submit('Save Post', array('class' => 'btn btn-primary'));
+    echo $this->Form->end();
 ?>

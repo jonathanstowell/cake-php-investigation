@@ -96,7 +96,7 @@
                                         <?=$form->password('User.password'); ?>
 
                                     </p>
-                                    <?=$form->submit('Log in'); ?>
+                                    <?=$form->submit('Log in', array('class' => 'btn btn-primary')); ?>
                                 </form>
                             </li>
                         </ul>

@@ -1,6 +1,6 @@
 <h2>Log in to your account</h2>
 
-<form method="POST" action="<?=$this->here; ?>">
+<?php echo $this->Form->create('User'); ?>
 
     <?=$form->error('User.username'); ?>
     <p>
@@ -12,5 +12,7 @@
         <?=$form->password('User.password'); ?>
 
     </p>
-    <?=$form->submit('Log in'); ?>
-</form>
+<?php
+    echo $this->Form->submit('Login', array('class' => 'btn btn-primary'));
+    echo $this->Form->end();
+?>

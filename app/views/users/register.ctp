@@ -1,4 +1,6 @@
-<h2>Register your account</h2>
+<div class="hero-unit">
+    <h1>Register your account</h1>
+</div>
 
 <form method="POST" action="<?=$this->here; ?>">
 
@@ -11,5 +13,5 @@
         <?=$form->password('User.password'); ?>
     </p>
 
-    <?=$form->submit('Register'); ?>
+    <?=$form->submit('Register', array('class' => 'btn btn-primary')); ?>
 </form>

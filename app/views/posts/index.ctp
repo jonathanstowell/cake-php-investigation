@@ -10,7 +10,7 @@
         <th class="header yellow">Id</th>
         <th class="header green">Title</th>
         <? if($access->isLoggedin()): ?>
-        <th class="header red">Action</th>
+        <th class="header red">Actions</th>
         <? endif; ?>
         <th class="header purple">Created</th>
     </tr>
@@ -25,15 +25,15 @@
         </td>
         <? if($access->isLoggedin()): ?>
         <td>
+            <?php echo $this->Html->link('Edit',
+                array('action' => 'edit', $post['Post']['id']),
+                array('class' => 'btn btn-primary'));?>
             <?php echo $this->Html->link(
             'Delete',
             array('action' => 'delete', $post['Post']['id']),
             array('class' => 'btn btn-danger'),
             'Are you sure?'
             )?>
-            <?php echo $this->Html->link('Edit',
-                array('action' => 'edit', $post['Post']['id']),
-                array('class' => 'btn btn-primary'));?>
         </td>
         <? endif; ?>
         <td><?php echo $post['Post']['created']; ?></td>

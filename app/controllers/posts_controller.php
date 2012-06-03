@@ -9,7 +9,12 @@
 
 class PostsController extends AppController {
     var $name = 'Posts';
-    var $components = array('Session');
+    var $components = array('Session', 'Auth');
+
+    function beforeFilter(){
+        $this->Auth->userModel = 'User';
+        $this->Auth->allow(array('index', 'view'));
+    }
 
     function index() {
         $this->set('posts', $this->Post->find('all'));
