@@ -67,6 +67,43 @@
                         <?php echo $this->Html->link("Home", array('controller' => 'posts', 'action' => 'index')); ?>
                     </li>
                 </ul>
+                <? if($access->isLoggedin()): ?>
+                <ul class="nav pull-right">
+                    <li>
+                        <?php echo $this->Html->link("Log Off", array('controller' => 'users', 'action' => 'logout')); ?>
+                    </li>
+                </ul>
+                <? endif; ?>
+                <? if(!$access->isLoggedin()): ?>
+                <ul class="nav pull-right">
+                    <li id="partial-login-container" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Have an account? Sign in<b class="caret"></b></a>
+                        <ul class="dropdown-menu dropdown-form">
+                            <li class="dropdown-caret right">
+                                <span class="caret-outer"></span>
+                                <span class="caret-inner"></span>
+                            </li>
+                            <li>
+                                <?php echo $this->Form->create(null, array('url' => array('controller' => 'users', 'action' => 'login'))); ?>
+
+                                    <?=$form->error('User.username'); ?>
+                                    <p>
+                                        Username
+                                        <?=$form->text('User.username'); ?>
+                                    </p>
+                                    <p>
+                                        Password
+                                        <?=$form->password('User.password'); ?>
+
+                                    </p>
+                                    <?=$form->submit('Log in'); ?>
+                                    <?php echo $this->Html->link("Register", array('controller' => 'users', 'action' => 'register')); ?>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <? endif; ?>
             </div>
         </div>
     </div>
