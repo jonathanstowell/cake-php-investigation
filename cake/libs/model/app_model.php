@@ -32,4 +32,50 @@
  * @subpackage    cake.cake.libs.model
  */
 class AppModel extends Model {
+    var $cache = true;
+
+    function find($type, $params = null)
+    {
+        if ($this->cache) {
+            if(is_array($type)) {
+                $typeString = md5(serialize($type));
+            } else {
+                $typeString = $type;
+            }
+            $tag = isset($this->name) ? '_' . $this->name : 'appmodel';
+            $paramsHash = md5(serialize($params));
+            $version = (int)Cache::read($tag);
+            $fullTag = $tag . '_' . $typeString . '_' . $paramsHash;
+            if ($result = Cache::read($fullTag)) {
+                if ($result['version'] == $version)
+                    return $result['data'];
+            }
+            $result = array('version' => $version, 'data' => parent::find($type, $params), );
+            Cache::write($fullTag, $result);
+            Cache::write($tag, $version);
+            return $result['data'];
+        } else {
+            return parent::find($type, $params);
+        }
+    }
+
+    private function updateCounter()
+    {
+        if ($this->cache) {
+            $tag = isset($this->name) ? '_' . $this->name : 'appmodel';
+            Cache::write($tag, 1 + (int)Cache::read($tag));
+        }
+    }
+
+    function afterDelete()
+    {
+        $this->updateCounter();
+        parent::afterDelete();
+    }
+
+    function afterSave($created)
+    {
+        $this->updateCounter();
+        parent::afterSave($created);
+    }
 }

@@ -3,7 +3,7 @@
 -- Server version:               5.5.25 - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL version:             7.0.0.4053
--- Date/time:                    2012-06-03 23:25:25
+-- Date/time:                    2012-06-04 13:50:26
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -60,10 +60,11 @@ CREATE TABLE IF NOT EXISTS `aros_acos` (
 -- Data exporting was unselected.
 
 
--- Dumping structure for table cakephp.groups
-CREATE TABLE IF NOT EXISTS `groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
+-- Dumping structure for table cakephp.posts
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT NULL,
+  `body` text,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -72,13 +73,11 @@ CREATE TABLE IF NOT EXISTS `groups` (
 -- Data exporting was unselected.
 
 
--- Dumping structure for table cakephp.posts
-CREATE TABLE IF NOT EXISTS `posts` (
+-- Dumping structure for table cakephp.users
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) DEFAULT NULL,
-  `body` text,
-  `created` datetime DEFAULT NULL,
-  `modified` datetime DEFAULT NULL,
+  `username` text,
+  `password` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
