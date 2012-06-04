@@ -20,6 +20,12 @@ class PostsController extends AppController {
         $this->set('posts', $this->Post->find('all'));
     }
 
+    function all() {
+        $this->set('posts', $this->Post->find('all'));
+        $this->view = 'Json';
+        $this->set('json', 'posts');
+    }
+
     function view($id) {
         $this->Post->id = $id;
         $this->set('post', $this->Post->read());
