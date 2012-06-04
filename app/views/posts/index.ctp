@@ -23,7 +23,7 @@
         <td>
             <?php echo $this->Html->link($post['Post']['title'], array('action' => 'view', $post['Post']['id']));?>
         </td>
-        <? if($access->isLoggedin()): ?>
+        <? if($access->check('Post')): ?>
         <td>
             <?php echo $this->Html->link('Edit',
                 array('action' => 'edit', $post['Post']['id']),

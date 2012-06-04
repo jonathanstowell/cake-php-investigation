@@ -8,7 +8,7 @@
  */
 class UsersController extends AppController {
     var $name = 'Users';
-    var $components = array('Auth');
+    var $components = array('Auth', 'Acl');
 
     function beforeFilter(){
         $this->Auth->userModel = 'User';
@@ -25,6 +25,19 @@ class UsersController extends AppController {
                 $data = $this->User->read();
                 // Use it to authenticate the user
                 $this->Auth->login($data);
+
+                // Set the user roles
+                $aro = new Aro();
+                $parent = $aro->findByAlias($this->User->find('count') > 1 ? 'User' : 'Super');
+
+                $aro->create();
+                $aro->save(array(
+                    'model'        => 'User',
+                    'foreign_key'    => $this->User->id,
+                    'parent_id'    => $parent['Aro']['id'],
+                    'alias'        => 'User::'.$this->User->id
+                ));
+
                 // Then redirect
                 $this->redirect('/');
             }
@@ -45,6 +58,67 @@ class UsersController extends AppController {
     function logout(){
         $this->Auth->logout();
         $this->redirect('/');
+    }
+
+    function install(){
+        if($this->Acl->Aro->findByAlias("Admin")){
+            $this->redirect('/');
+        }
+        $aro = new aro();
+
+        $aro->create();
+        $aro->save(array(
+            'model' => 'User',
+            'foreign_key' => null,
+            'parent_id' => null,
+            'alias' => 'Super'
+        ));
+
+        $aro->create();
+        $aro->save(array(
+            'model' => 'User',
+            'foreign_key' => null,
+            'parent_id' => null,
+            'alias' => 'Admin'
+        ));
+
+        $aro->create();
+        $aro->save(array(
+            'model' => 'User',
+            'foreign_key' => null,
+            'parent_id' => null,
+            'alias' => 'User'
+        ));
+
+        $aro->create();
+        $aro->save(array(
+            'model' => 'User',
+            'foreign_key' => null,
+            'parent_id' => null,
+            'alias' => 'Suspended'
+        ));
+
+        $aco = new Aco();
+        $aco->create();
+        $aco->save(array(
+            'model' => 'User',
+            'foreign_key' => null,
+            'parent_id' => null,
+            'alias' => 'User'
+        ));
+
+        $aco->create();
+        $aco->save(array(
+            'model' => 'Post',
+            'foreign_key' => null,
+            'parent_id' => null,
+            'alias' => 'Post'
+        ));
+
+        $this->Acl->allow('Super', 'Post', '*');
+        $this->Acl->allow('Super', 'User', '*');
+        $this->Acl->allow('Admin', 'Post', '*');
+        $this->Acl->allow('User', 'Post', array('create'));
     }
 }
 ?>

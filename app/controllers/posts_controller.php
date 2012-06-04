@@ -9,7 +9,7 @@
 
 class PostsController extends AppController {
     var $name = 'Posts';
-    var $components = array('Session', 'Auth');
+    var $components = array('Session', 'Auth', 'Acl', 'Access');
 
     function beforeFilter(){
         $this->Auth->userModel = 'User';
@@ -36,6 +36,8 @@ class PostsController extends AppController {
     }
 
     function edit($id = null) {
+        if(!$this->Access->check('Post', 'update')) $this->cakeError('error404');
+
         $this->Post->id = $id;
         if (empty($this->data)) {
             $this->data = $this->Post->read();

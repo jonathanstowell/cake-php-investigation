@@ -69,6 +69,7 @@
                 </ul>
                 <? if($access->isLoggedin()): ?>
                 <ul class="nav pull-right">
+                    <li><a href="#">Welcome <?=$access->getmy('username'); ?></a></li>
                     <li>
                         <?php echo $this->Html->link("Log Off", array('controller' => 'users', 'action' => 'logout')); ?>
                     </li>
@@ -120,6 +121,11 @@
     </footer>
 </div>
 <!--! end of #container -->
+
+<div class="container content">
+    <h1>SQL Dump</h1>
+    <?php echo $this->element('sql_dump'); ?>
+</div>
 
 <!-- All JavaScript at the bottom, except for Modernizr and Respond.
 Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
