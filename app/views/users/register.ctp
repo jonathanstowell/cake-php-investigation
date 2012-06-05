@@ -2,16 +2,12 @@
     <h1>Register your account</h1>
 </div>
 
-<form method="POST" action="<?=$this->here; ?>">
-
-    <p>
-        Username
-        <?=$form->text('User.username'); ?>
-    </p>
-    <p>
-        Password
-        <?=$form->password('User.password'); ?>
-    </p>
-
-    <?=$form->submit('Register', array('class' => 'btn btn-primary')); ?>
-</form>
+<?php
+echo $this->Form->create('User');
+echo $this->Form->input('username', array('type'=>'text'));
+echo $this->Form->input('email', array('type'=>'text'));
+echo $this->Form->input('password', array('value' => ''));
+echo $this->Form->input('password2', array('value' => '', 'label' => 'Confirm Password', 'type' => 'password'));
+echo $this->Form->submit('Register', array('class' => 'btn btn-primary'));
+echo $this->Form->end();
+?>

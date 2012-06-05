@@ -9,6 +9,7 @@
     <tr>
         <th class="header yellow">Id</th>
         <th class="header green">Title</th>
+        <th class="header green">Creator</th>
         <? if($access->isLoggedin()): ?>
         <th class="header red">Actions</th>
         <? endif; ?>
@@ -23,17 +24,22 @@
         <td>
             <?php echo $this->Html->link($post['Post']['title'], array('action' => 'view', $post['Post']['id']));?>
         </td>
-        <? if($access->check('Post')): ?>
+        <td><?php echo $post['User']['username']; ?></td>
+        <? if($access->isLoggedin()): ?>
         <td>
-            <?php echo $this->Html->link('Edit',
-                array('action' => 'edit', $post['Post']['id']),
-                array('class' => 'btn btn-primary'));?>
-            <?php echo $this->Html->link(
-            'Delete',
-            array('action' => 'delete', $post['Post']['id']),
-            array('class' => 'btn btn-danger'),
-            'Are you sure?'
-            )?>
+            <? if($post['User']['id'] == $access->getMy('id')): ?>
+                <?php echo $this->Html->link('Edit',
+                    array('action' => 'edit', $post['Post']['id']),
+                    array('class' => 'btn btn-primary'));?>
+                <?php echo $this->Html->link(
+                'Delete',
+                array('action' => 'delete', $post['Post']['id']),
+                array('class' => 'btn btn-danger'),
+                'Are you sure?'
+                )?>
+            <? else: ?>
+                N/A
+            <? endif; ?>
         </td>
         <? endif; ?>
         <td><?php echo $post['Post']['created']; ?></td>

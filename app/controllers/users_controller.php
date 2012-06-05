@@ -8,7 +8,7 @@
  */
 class UsersController extends AppController {
     var $name = 'Users';
-    var $components = array('Auth', 'Acl');
+    var $components = array('Auth', 'Acl', 'Email');
 
     function beforeFilter(){
         $this->Auth->userModel = 'User';
@@ -17,16 +17,12 @@ class UsersController extends AppController {
 
     function register(){
         if(!empty($this->data)){
-            // Here you should validate the username (min length, max length, to not include special chars, not existing already, etc)
-            // As well as the password
-            if($this->User->validates()){
-                $this->User->save($this->data);
-                // Let's read the data we just inserted
+            if(isset($this->data['User']['password2']))
+                $this->data['User']['password2hashed'] = $this->Auth->password($this->data['User']['password2']);
+            if($this->User->save($this->data)){
                 $data = $this->User->read();
-                // Use it to authenticate the user
                 $this->Auth->login($data);
 
-                // Set the user roles
                 $aro = new Aro();
                 $parent = $aro->findByAlias($this->User->find('count') > 1 ? 'User' : 'Super');
 
@@ -38,19 +34,19 @@ class UsersController extends AppController {
                     'alias'        => 'User::'.$this->User->id
                 ));
 
-                // Then redirect
                 $this->redirect('/');
+            } else {
+                $this->Session->setFlash('There was an error signing up. Please, try again.', 'flash_error');
             }
         }
     }
 
     function login(){
         if(!empty($this->data)){
-            // If the username/password match
             if($this->Auth->login($this->data)){
                 $this->redirect('/');
             } else {
-                $this->User->invalidate('username', 'Username and password combination is incorrect!');
+                $this->User->invalidate('username', 'Username and password combination is incorrect!', 'flash_error');
             }
         }
     }

@@ -74,8 +74,7 @@
                         <?php echo $this->Html->link("Log Off", array('controller' => 'users', 'action' => 'logout')); ?>
                     </li>
                 </ul>
-                <? endif; ?>
-                <? if(!$access->isLoggedin()): ?>
+                <?php else: ?>
                 <ul class="nav pull-right">
                     <li id="partial-login-container" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Have an account? Sign in<b class="caret"></b></a>

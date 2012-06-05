@@ -49,5 +49,9 @@ class AccessComponent extends Object{
 
         return $cache=='true' ? true : false;
     }
+
+    function getmy($what){
+        return !empty($this->user) && isset($this->user['User'][$what]) ? $this->user['User'][$what] : false;
+    }
 }
 ?>
